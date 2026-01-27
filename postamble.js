@@ -308,7 +308,7 @@ function run(args) {
     initRuntime();
 
     // addressables hack
-    if (StarkSDK || WXWASMSDK) {
+    if (window.StarkSDK || window.WXWASMSDK) {
       const fs = wx.getFileSystemManager();
       const RW = FS.getMode(true, true);
       let parent = '';
@@ -318,7 +318,7 @@ function run(args) {
       }
       function file(name) {
         const full = `${parent}/${name}`;
-        const data = new Uint8Array(fs.readFileSync((StarkSDK ? 'TT' : '') + full));
+        const data = new Uint8Array(fs.readFileSync((window.StarkSDK ? 'TT' : '') + full));
         const node = FS.create(full.replace('.txt', ''), RW);
         var stream = FS.open(node, 577);
         FS.write(stream, data, 0, data.length);
@@ -593,3 +593,4 @@ var workerResponded = false, workerCallbackId = -1;
 #if STANDALONE_WASM && ASSERTIONS && !WASM_BIGINT
 err('warning: running JS from STANDALONE_WASM without WASM_BIGINT will fail if a syscall with i64 is used (in standalone mode we cannot legalize syscalls)');
 #endif
+
