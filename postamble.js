@@ -310,33 +310,41 @@ function run(args) {
     // addressables hack
     if (window.StarkSDK || window.WXWASMSDK) {
       const fs = wx.getFileSystemManager();
-      const RW = FS.getMode(true, true);
-      let parent = '';
-      function dir(path) {
-        FS.mkdir(path);
-        parent = path;
-      }
-      function file(name) {
-        const full = `${parent}/${name}`;
-        const data = new Uint8Array(fs.readFileSync((window.StarkSDK ? 'TT' : '') + full));
-        const node = FS.create(full.replace('.txt', ''), RW);
-        var stream = FS.open(node, 577);
-        FS.write(stream, data, 0, data.length);
-        FS.close(stream);
-      }
+      let existed = true;
       try {
-        dir('StreamingAssets');
-      } catch (error) { }
-      dir('StreamingAssets/aa');
-      file('settings.json');
-      file('catalog.json');
-      dir('StreamingAssets/aa/WebGL')
-      file('localization-assets-shared_assets_all.bundle.txt');
-      file('localization-locales_assets_all.bundle.txt');
-      file('localization-string-tables-english(en)_assets_all.bundle.txt');
-      file('localization-string-tables-chinese(simplified)(zh-hans)_assets_all.bundle.txt');
-      dir('StreamingAssets/aa/AddressablesLink')
-      file('link.xml');
+        fs.accessSync("StreamingAssets/aa")
+      } catch (error) {
+        existed = false;
+      }
+      if (existed) {
+        const RW = FS.getMode(true, true);
+        let parent = "";
+        function dir(path) {
+          FS.mkdir(path);
+          parent = path
+        }
+        function file(name) {
+          const full = `${parent}/${name}`;
+          const data = new Uint8Array(fs.readFileSync((window.StarkSDK ? "TT" : "") + full));
+          const node = FS.create(full.replace(".txt", ""), RW);
+          var stream = FS.open(node, 577);
+          FS.write(stream, data, 0, data.length);
+          FS.close(stream)
+        }
+        try {
+          dir("StreamingAssets")
+        } catch (error) { }
+        dir("StreamingAssets/aa");
+        file("settings.json");
+        file("catalog.json");
+        dir("StreamingAssets/aa/WebGL");
+        file("localization-assets-shared_assets_all.bundle.txt");
+        file("localization-locales_assets_all.bundle.txt");
+        file("localization-string-tables-english(en)_assets_all.bundle.txt");
+        file("localization-string-tables-chinese(simplified)(zh-hans)_assets_all.bundle.txt");
+        dir("StreamingAssets/aa/AddressablesLink");
+        file("link.xml")
+      }
     }
 
 #if HAS_MAIN
@@ -593,4 +601,3 @@ var workerResponded = false, workerCallbackId = -1;
 #if STANDALONE_WASM && ASSERTIONS && !WASM_BIGINT
 err('warning: running JS from STANDALONE_WASM without WASM_BIGINT will fail if a syscall with i64 is used (in standalone mode we cannot legalize syscalls)');
 #endif
-
