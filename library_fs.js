@@ -1546,8 +1546,10 @@ FS.staticInit();` +
       parent = typeof parent == 'string' ? parent : FS.getPath(parent);
 
       // Streaming Assets hack
-      parent = parent.replace('vfs_streamingassets', 'StreamingAssets');
-      path = path.replace('vfs_streamingassets', 'StreamingAssets');
+      if (window.wx) {
+        parent = parent.replace('vfs_streamingassets', 'StreamingAssets');
+        path = path.replace('vfs_streamingassets', 'StreamingAssets');
+      }
 
       var parts = path.split('/').reverse();
       while (parts.length) {
@@ -1576,7 +1578,9 @@ FS.staticInit();` +
       }
 
       // Streaming Assets hack
-      path = path.replace('vfs_streamingassets', 'StreamingAssets');
+      if (window.wx) {
+        path = path.replace('vfs_streamingassets', 'StreamingAssets');
+      }
 
       var mode = FS.getMode(canRead, canWrite);
       var node = FS.create(path, mode);
