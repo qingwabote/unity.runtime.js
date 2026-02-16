@@ -308,7 +308,7 @@ function run(args) {
     initRuntime();
 
     // addressables hack
-    if (window.StarkSDK || window.WXWASMSDK) {
+    if (window.wx) {
       const fs = wx.getFileSystemManager();
       let existed = true;
       try {
