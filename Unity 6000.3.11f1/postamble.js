@@ -260,11 +260,6 @@ function run() {
         file("settings.json");
         file("catalog.bin");
         file("catalog.hash.txt");
-        dir("StreamingAssets/aa/WebGL");
-        file("a2a1e084daab080ba4d6fa34f245ac7e_monoscripts_7fee0dc73b1fc0508b7cdd3dbe5502e3.bundle.txt");
-        file("localization-assets-shared_assets_all.bundle.txt");
-        file("localization-locales_assets_all.bundle.txt");
-        file("localization-string-tables-chinese(simplified)(zh-hans)_assets_all.bundle.txt");
         dir("StreamingAssets/aa/AddressablesLink");
         file("link.xml")
       }
