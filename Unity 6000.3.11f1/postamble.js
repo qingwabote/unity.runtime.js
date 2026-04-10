@@ -229,42 +229,6 @@ function run() {
 
     initRuntime();
 
-    // addressables hack
-    if (window.wx) {
-      const fs = wx.getFileSystemManager();
-      let existed = true;
-      try {
-        fs.accessSync((window.StarkSDK ? "TT" : "") + "StreamingAssets/aa")
-      } catch (error) {
-        existed = false;
-      }
-      if (existed) {
-        const RW = FS_getMode(true, true);
-        let parent = "";
-        function dir(path) {
-          FS.mkdir(path);
-          parent = path
-        }
-        function file(name) {
-          const full = `${parent}/${name}`;
-          const data = new Uint8Array(fs.readFileSync((window.StarkSDK ? "TT" : "") + full));
-          const node = FS.create(full.replace(".txt", ""), RW);
-          var stream = FS.open(node, 577);
-          FS.write(stream, data, 0, data.length);
-          FS.close(stream)
-        }
-        try {
-          dir("StreamingAssets")
-        } catch (error) { }
-        dir("StreamingAssets/aa");
-        file("settings.json");
-        file("catalog.bin");
-        file("catalog.hash.txt");
-        dir("StreamingAssets/aa/AddressablesLink");
-        file("link.xml")
-      }
-    }
-
 #if HAS_MAIN
     preMain();
 #endif
