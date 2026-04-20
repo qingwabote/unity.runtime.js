@@ -13,6 +13,7 @@ Module["_malloc"] = _malloc;
 Module["_free"] = _free;
 Module["lengthBytesUTF8"] = lengthBytesUTF8;
 Module["stringToUTF8"] = stringToUTF8;
+Module["FS_symlink"] = FS.symlink;
 
 var calledRun;
 
